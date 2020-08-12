@@ -18,8 +18,15 @@ namespace EmployeeRegister.Core.Extensions
                     sqlOptions.MigrationsAssembly("EmployeeRegister.Core")));
 
             // Dependency Injection
+            // Repositories
             serviceCollection.AddScoped<IEmployeeRepository, EmployeeDatabaseRepository>();
+            serviceCollection.AddScoped<IWeatherRepository, WeatherRepository>();
+            serviceCollection.AddScoped<IPriceRepository, PriceRepository>();
+            serviceCollection.AddScoped<IWindmillRepository, WindmillRepository>();
+
+            // Services
             serviceCollection.AddScoped<IEmployeeService, EmployeeService>();
+            serviceCollection.AddScoped<IWindmillDataService, WindmillDataService>();
             
             return serviceCollection;
         }

@@ -17,11 +17,13 @@ namespace EmployeeRegister.Controllers
     {
         private readonly IEmployeeService _employeeService;
         private readonly IMapper _mapper;
+        private readonly IWindmillDataService _windmillDataService;
 
-        public EmployeeController(IEmployeeService employeeService, IMapper mapper)
+        public EmployeeController(IEmployeeService employeeService, IMapper mapper, IWindmillDataService windmillDataService)
         {
             _employeeService = employeeService;
             _mapper = mapper;
+            _windmillDataService = windmillDataService;
         }
 
         /// <summary>
@@ -39,6 +41,11 @@ namespace EmployeeRegister.Controllers
         {
             try
             {
+                var wind = await _windmillDataService.GetCurrentWind();
+                var powerPrice = await _windmillDataService.GetCurrentPowerPrice();
+                var windmills = await _windmillDataService.GetAllWindmills("Reidar", "kMObLyPfkU+n8A6dBLY1Nw==");
+                await _windmillDataService.ChangeWindmillIsActivated("Reidar", "kMObLyPfkU+n8A6dBLY1Nw==", "03931163-a55b-4f64-b282-b483b5dba4d3", false);
+
                 var all = await _employeeService.GetAll();
                 return Ok(all);
             }

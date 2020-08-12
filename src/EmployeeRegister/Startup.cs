@@ -1,3 +1,4 @@
+using System;
 using AutoMapper;
 using EmployeeRegister.Core.Extensions;
 using EmployeeRegister.MappingProfiles;
@@ -53,6 +54,18 @@ namespace EmployeeRegister
                 });
             });
 
+            // Add cors security
+            services.AddCors(options =>
+            {
+                options.AddPolicy("CorsPolicy",
+                    builder => builder
+                        .AllowAnyOrigin()
+                        .AllowAnyMethod()
+                        .AllowAnyHeader()
+                        .SetPreflightMaxAge(TimeSpan.FromSeconds(2520))
+                        .Build());
+            });
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -71,6 +84,7 @@ namespace EmployeeRegister
                 c.RoutePrefix = string.Empty;
             });
 
+            app.UseCors("CorsPolicy");
             app.UseHttpsRedirection();
             app.UseRouting();
             app.UseAuthorization();
