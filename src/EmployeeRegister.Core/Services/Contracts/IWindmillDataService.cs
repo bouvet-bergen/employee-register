@@ -10,5 +10,6 @@ namespace EmployeeRegister.Core.Services.Contracts
         Task<decimal> GetCurrentPowerPrice();
         Task<List<Windmill>> GetAllWindmills(string groupId, string groupKey);
         Task ChangeWindmillIsActivated(string groupId, string groupKey, string windMillId, bool isActivated);
+        Task<decimal> CalculateProfit(double windSpeed, decimal powerPrice);
     }
 }
